@@ -1,0 +1,79 @@
+<div class=" row justify-content-md-center" style=" padding : 15px; background-image:url(../../assets/images/Pizza.jpg);">
+  <div id="main" class="card text-center col-md-6 col-sm-12" style="padding: 0; margin:15px">
+    <div class="card-header">
+      Sign Up
+    </div>
+    <div class="card-body">
+      <form #signupForm="ngForm" class="container-fluid">
+        <div class="alert alert-danger col-12" role="alert" *ngIf="userTaken">
+          UserId Registered : Choose another ID
+        </div>
+        <div class="col-12">
+          <label for="userId" class="form-label" style="float:left">User Id</label>
+          <input type="text" id="userId" class="form-control"
+                 #userId="ngModel" name="userId" [(ngModel)]="signupForms.userId"
+                 required minlength="4"
+                 [class.is-invalid]="userId.touched && userId.invalid">
+          <div class=" alert-danger col-12"
+               *ngIf="userId.errors && (userId.invalid && userId.touched)" role="alert" style="margin:2px; padding:5px">
+               <span *ngIf="userId.errors.required">Enter User ID</span>
+            <span *ngIf="userId.errors.minlength">Atleast 4 character long</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="userName" class="form-label" style="float:left">Name</label>
+          <input type="text" class="form-control"
+                 name="userName" #userName="ngModel" [(ngModel)]="signupForms.userName"
+                 [class.is-invalid]="userName.touched && userName.invalid"
+                 minlength="4" required>
+          <div class=" alert-danger col-12"
+               *ngIf="userName.errors && (userName.invalid && userName.touched)" role="alert" style="margin:2px; padding:5px">
+            <span *ngIf="userName.errors.required">Enter Name</span>
+            <span *ngIf="userName.errors.minlength">Atleast 4 character long</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="contactNumber" class="form-label" style="float:left">Contact Number</label>
+          <input type="number" class="form-control"
+                 name="contactNumber" #contactNumber="ngModel" [(ngModel)]="signupForms.contactNumber"
+                 [class.is-invalid]="contactNumber.touched && contactNumber.invalid"
+                 required pattern="^[6-9]\d{9}$">
+          <div class="alert-danger col-12"
+               *ngIf="contactNumber.errors && (contactNumber.invalid && contactNumber.touched)" role="alert" style="margin:2px; padding:5px">
+            <span *ngIf="contactNumber.errors.required">Contact Number is required</span>
+            <span *ngIf="contactNumber.errors.pattern">Should contain 10 digit and first char should be between 6-9</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="password" class="form-label" style="float:left">Password</label>
+          <input type="password" class="form-control"
+                 name="password" #password="ngModel" [(ngModel)]="signupForms.password"
+                 [class.is-invalid]="password.touched && password.invalid"
+                 minlength="8" required>
+          <div class=" alert-danger col-12"
+               *ngIf="password.errors && (password.invalid && password.touched)" role="alert" style="margin:2px; padding:5px">
+            <span *ngIf="password.errors.required">Enter Password</span>
+            <span *ngIf="password.errors.minlength">Atleast 8 character long</span>
+          </div>
+        </div>
+        <div class="col-12">
+          <label for="cPassword" class="form-label" style="float:left">Confirm Password</label>
+          <input type="password" class="form-control"
+                 name="cPassword" #cPassword="ngModel" [(ngModel)]="signupForms.cPassword"
+                 (change)="fnConfirmPassword(password.value,cPassword.value)" (blur)="fnConfirmPassword(password.value,cPassword.value)"
+                 [class.is-invalid]=" cPHasError && cPassword.touched"
+                 required>
+          <div class=" alert-danger col-12"
+               [class.d-none]="!cPHasError || cPassword.untouched" role="alert" style="margin:2px; padding:5px">
+            <span>Password not Matching!!</span>
+          </div>
+        </div>
+        <div class="col-md-12" style="margin:10px;">
+          <button type="submit" [disabled]="signupForm.form.invalid || cPHasError" class="btn btn-success" (click)="signup()">Sign Up</button>&nbsp;
+          <input type="reset" value="Reset" class="btn btn-warning" />
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
